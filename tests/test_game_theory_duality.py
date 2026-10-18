@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import numpy as np
 from src.game_theory.kyle_model import (
+    KyleEquilibriumSolver,
     solve_kyle_single_period,
     simulate_kyle_sequential_auction,
 )
@@ -37,6 +38,34 @@ def test_kyle_single_and_multi_period_invariants() -> None:
     )
     diffs = np.diff(traj.sigma_var_path)
     assert np.all(diffs < 0.0), "Posterior variance must strictly decrease across auctions."
+
+
+def test_kyle_equilibrium_solver_exact_recursion() -> None:
+    """
+    Verifies KyleEquilibriumSolver exact Theorem 2 recursion and Monte Carlo verification:
+      1. Single-period equilibrium values match analytical formulas.
+      2. Multi-period sequential recursion produces monotonic variance reduction.
+      3. OLS regression on simulated orders recovers Kyle's lambda.
+    """
+    solver = KyleEquilibriumSolver(p0=100.0, sigma_v0=4.0, sigma_u=10.0)
+    beta, lam, sig1, profit = solver.single_period_equilibrium()
+    assert np.isclose(beta, 5.0, atol=1e-12)
+    assert np.isclose(lam, 0.10, atol=1e-12)
+    assert np.isclose(sig1, 2.0, atol=1e-12)
+    assert np.isclose(profit, 10.0, atol=1e-12)
+
+    betas, lambdas, sigmas = solver.solve_sequential_multi_period(n_steps=15)
+    assert len(betas) == 15
+    assert len(lambdas) == 15
+    assert len(sigmas) == 16
+    assert np.isclose(sigmas[0], 4.0, atol=1e-8)
+    assert np.all(np.diff(sigmas) < 0.0)
+    assert np.all(lambdas > 0.0)
+    assert np.all(betas > 0.0)
+
+    sim_res = solver.simulate_and_verify(n_trials=20_000, seed=42)
+    assert np.isclose(sim_res.empirical_lambda_ols, sim_res.theoretical_lambda, rtol=0.08)
+    assert np.isclose(sim_res.empirical_insider_profit, sim_res.theoretical_insider_profit, rtol=0.08)
 
 
 def test_vickrey_and_first_price_revenue_equivalence() -> None:
@@ -86,4 +115,3 @@ def test_zero_sum_lp_strong_duality_and_iesds() -> None:
     B_dom = np.array([[3.0, 1.0], [2.0, 4.0], [5.0, 0.0]])
     _, _, rows_left, _ = iterated_elimination_strictly_dominated(A_dom, B_dom)
     assert 2 not in rows_left
-

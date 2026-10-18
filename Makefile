@@ -14,7 +14,7 @@ figures:
 	$(PYTHON) scripts/run_experiments.py
 
 paper: figures
-	cd paper && pdflatex -interaction=nonstopmode microstructure_execution_note.tex && pdflatex -interaction=nonstopmode microstructure_execution_note.tex
+	cd paper && pdflatex -interaction=nonstopmode microstructure_execution_note.tex && pdflatex -interaction=nonstopmode microstructure_execution_note.tex && cp microstructure_execution_note.pdf ../Technical_Note.pdf
 
 clean:
 	rm -rf __pycache__ .pytest_cache src/**/__pycache__ tests/__pycache__

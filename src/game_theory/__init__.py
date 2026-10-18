@@ -1,4 +1,6 @@
 from .kyle_model import (
+    KyleEquilibriumSolver,
+    KyleSimulationResult,
     KyleSinglePeriodEquilibrium,
     KyleMultiPeriodTrajectory,
     solve_kyle_single_period,
@@ -16,6 +18,8 @@ from .lp_equilibrium import (
 )
 
 __all__ = [
+    "KyleEquilibriumSolver",
+    "KyleSimulationResult",
     "KyleSinglePeriodEquilibrium",
     "KyleMultiPeriodTrajectory",
     "solve_kyle_single_period",
@@ -27,4 +31,3 @@ __all__ = [
     "solve_zero_sum_game_lp",
     "iterated_elimination_strictly_dominated",
 ]
-

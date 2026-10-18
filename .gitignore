@@ -32,3 +32,4 @@ paper/*.synctex.gz
 .DS_Store
 Thumbs.db
 
+paper/*.pdf
