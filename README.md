@@ -36,7 +36,7 @@ Liquidating an initial inventory $N_0$ over $T$ discrete decision epochs is form
 
 $$I_t = \frac{V_t^{\text{bid}} - V_t^{\text{ask}}}{V_t^{\text{bid}} + V_t^{\text{ask}}}, \qquad R_t(s_t, a_t) = -\left( \Delta c_t(a_t) + \lambda_{\text{inv}} \sigma_t^2 q_t^2 \right) + \eta_{\text{dsr}} \cdot \Delta \mathrm{DSR}_t$$
 
-where $\Delta c_t(a_t)$ is the single-step implementation shortfall relative to arrival mid-price, $\lambda_{\text{inv}} \sigma_t^2 q_t^2$ is the Almgren–Chriss quadratic inventory variance penalty, and $\Delta \mathrm{DSR}_t$ is the online Differential Sharpe Ratio increment (Moody & Saffell, 2001).
+where $\Delta c_t(a_t)$ is the single-step implementation shortfall relative to arrival mid-price, $\lambda_{\text{inv}} \sigma_t^2 q_t^2$ is the Almgren-Chriss quadratic inventory variance penalty, and $\Delta \mathrm{DSR}_t$ is the online Differential Sharpe Ratio increment (Moody & Saffell, 2001).
 
 ---
 

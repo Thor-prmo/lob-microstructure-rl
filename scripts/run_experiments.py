@@ -305,7 +305,7 @@ def main() -> None:
 
     axes[0].plot(t_grid, mean_p, color="#1b365d", lw=2.0, label="Mean Market Maker Price $E[P_t]$")
     axes[0].fill_between(
-        t_grid, p10, p90, color="#1b365d", alpha=0.18, label="15th–85th Percentile Band"
+        t_grid, p10, p90, color="#1b365d", alpha=0.18, label="15th-85th Percentile Band"
     )
     axes[0].axhline(
         kyle_traj.true_value,
